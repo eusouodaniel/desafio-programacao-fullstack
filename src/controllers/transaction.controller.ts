@@ -21,6 +21,20 @@ class TransactionController {
     throw new AppError("Internal server error", 500);
   }
 
+  async import(req: Request, res: Response)  {
+    try {
+      if (req.file) {
+
+      }
+      throw new AppError("File is required", 403);
+    } catch (e) {
+      //log info
+      console.log(e);
+    }
+
+    throw new AppError("Internal server error", 500);
+  }
+
 }
 
 export default TransactionController;
