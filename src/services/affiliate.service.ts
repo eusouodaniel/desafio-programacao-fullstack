@@ -16,6 +16,16 @@ class AffiliateService {
     return "";
   }
 
+  private filterAffiliatesByName(transactions: IProductFields[], getAffiliates: Affiliate[]) {
+    return transactions.map(transaction => transaction.affiliate)
+      .filter(
+        affiliateName =>
+        !getAffiliates
+          .map(affiliate => affiliate.name)
+          .includes(affiliateName),
+      ).filter((value, index, self) => self.indexOf(value) === index);
+  }
+
 }
 
 export default AffiliateService;
