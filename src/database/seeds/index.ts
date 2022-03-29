@@ -3,6 +3,24 @@ import * as bcrypt from "bcryptjs";
 
 import { AppDataSource } from "../index";
 
+async function createTransactionType() {
+	const connection = await AppDataSource.initialize();
+	await connection.query(
+	  `DELETE FROM transaction_types;`
+	);
+
+	await connection.query(
+		`
+			INSERT INTO transaction_types (id, type, description, kind, operation) values
+			('${uuidV4()}', 1, 'Venda produtor', 'Entrada', '+'),
+			('${uuidV4()}', 2, 'Venda afiliado', 'Entrada', '+'),
+			('${uuidV4()}', 3, 'Comissão paga', 'Saída', '-'),
+			('${uuidV4()}', 4, 'Comissão recebida', 'Entrada', '+')
+		`
+	);
+  	connection.destroy;
+}
+
 async function createUser() {
 	const connection = await AppDataSource.initialize();
 	await connection.query(
