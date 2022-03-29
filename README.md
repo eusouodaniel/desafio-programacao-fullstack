@@ -1,4 +1,3 @@
-
 # hubla-import-transactions
 
 Import transactions Hubla
@@ -6,7 +5,6 @@ Import transactions Hubla
 ## Tech stack
 
 ### NodeJS with Typescript
-
 Backend is a NodeJS and Typescript application, running Express, Postgres database and auth via JWT - Transparent Token
 
 Primary keys are uuid for using microservices
@@ -17,14 +15,12 @@ The entrypoint is the `src/server.ts` file.
 `/api-docs`
 
 ### Tests
-
 Tests using **Jest**
 
 Test file path `src/__tests__` folder.
 
 
 ## How to run project with Docker
-
 Create file `.env` in folder and pass variables to db.
 
 Example:
@@ -49,6 +45,10 @@ Database in `5432`
 Database test in `5431`
 Adminer(Interface to query data) `8080`
 
+### CI process
+`GitActions`
+Docker image: `https://hub.docker.com/repository/docker/danielrodriguess/hubla-import-transactions-api`
+
 ## How to run project without docker
 Create file `.env.dev` in folder and pass variables to db.
 Example:
@@ -72,7 +72,6 @@ Build app: `yarn run build`
 Run in prod: `yarn run start`
 
 ## Docs
-
 - `[GET] /healthz` - Check if application is online.
 - `[POST] /auth/login` - Endpoint to log in, passing email and password, the authentication token will be returned, which is valid for one hour.
 - `[GET] /auth/me` - Returns token and role of the logged in user
@@ -96,3 +95,7 @@ Run in prod: `yarn run start`
 - Using DDD to model domains
 - Using Dependency Injection(DI) and Inversion(IOC)
 - Use of HATEOAS - API Maturity
+- Uncontrolled data used in path expression - Check the file before reading
+
+## Security
+- Scanning with CodeQL
