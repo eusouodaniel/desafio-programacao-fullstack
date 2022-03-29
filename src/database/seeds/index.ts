@@ -36,4 +36,5 @@ async function createUser() {
   	connection.destroy;
 }
 
+createTransactionType().then(() => console.log("Seed transaction_type created!"));
 createUser().then(() => console.log("Seed user created!"));
