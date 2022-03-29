@@ -26,6 +26,14 @@ class AffiliateService {
       ).filter((value, index, self) => self.indexOf(value) === index);
   }
 
+  private mapAffiliatesByName(filterAffiliateNames: String[]): any {
+    return filterAffiliateNames.map(affiliate => {
+      return {
+        name: affiliate,
+      };
+    })
+  }
+
 }
 
 export default AffiliateService;
