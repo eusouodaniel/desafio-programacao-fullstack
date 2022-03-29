@@ -6,14 +6,20 @@ import IProductFields from '../interfaces/IProductFields';
 
 class AffiliateService {
 
-  public async execute(transactions: IProductFields[]) {
+  public async execute(transactions: IProductFields[]): Promise<Affiliate[]>  {
     const affiliateRepository = AppDataSource.getRepository(Affiliate);
 
     let getAffiliates = await affiliateRepository.findBy({
       name: In(transactions.map(transaction => transaction.affiliate)),
     });
 
-    return "";
+    const filterAffiliateNames = this.filterAffiliatesByName(transactions, getAffiliates);
+    const createAffiliates = this.mapAffiliatesByName(filterAffiliateNames);
+
+    const affiliates = affiliateRepository.create(createAffiliates);
+    await affiliateRepository.save(affiliates);
+
+    return getAffiliates.concat(affiliates);
   }
 
   private filterAffiliatesByName(transactions: IProductFields[], getAffiliates: Affiliate[]) {
