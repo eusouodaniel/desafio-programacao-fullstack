@@ -17,7 +17,7 @@ class TransactionUtil {
     const products = await this.checkProducts(transactionFields);
     const transactionTypes = await this.checkTransactionTypes(transactionFields);
 
-
+    return transactionService.executeImport(transactionFields, affiliates, products, transactionTypes);
   }
 
   private async checkAffiliates(transactionFields: IProductFields[]) {
