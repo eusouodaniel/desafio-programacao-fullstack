@@ -7,6 +7,6 @@ const authRouter = Router();
 const authController = new AuthController();
 
 authRouter.post('/login', authController.login);
-authRouter.get('/me', [AuthJWT], authController.getInfoUser);
+authRouter.get('/me', AuthJWT, authController.getInfoUser);
 
 export default authRouter;

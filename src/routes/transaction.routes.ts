@@ -11,7 +11,8 @@ const transactionController = new TransactionController();
 
 const upload = multer(uploadConfig);
 
-transactionRouter.get('/', [AuthJWT, AuthRole(["PRODUCER"])], transactionController.index);
-transactionRouter.post('/import', [AuthJWT, AuthRole(["PRODUCER"])], upload.single('file'), transactionController.import);
+transactionRouter.use(AuthJWT);
+transactionRouter.get('/', AuthRole(["PRODUCER"]), transactionController.index);
+transactionRouter.post('/import', AuthRole(["PRODUCER"]), upload.single('file'), transactionController.import);
 
 export default transactionRouter;
