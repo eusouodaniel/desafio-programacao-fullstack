@@ -4,12 +4,13 @@ import Product from '../entities/product.model';
 import TransactionType from '../entities/transaction-type.model';
 import ITransactionFields from '../interfaces/ITransactionFields';
 import IProductFields from '../interfaces/IProductFields';
+import TransactionRepository from '../repositories/transaction.repository';
 import { AppDataSource } from '../database';
 
 class TransactionService {
 
   public async balance() {
-    return "";
+    return await TransactionRepository.getBalance();
   }
 
   public async executeImport(transactionFields: IProductFields[], affiliates: Affiliate[], products: Product[], transaction_types: TransactionType[]): Promise<Transaction[]> {

@@ -32,6 +32,8 @@ class TransactionController {
         const transactions = await transactionUtil.processImportTransaction(
           transactionFields
         );
+
+        return res.status(201).json(transactions);
       }
       throw new AppError("File is required", 403);
     } catch (e) {
