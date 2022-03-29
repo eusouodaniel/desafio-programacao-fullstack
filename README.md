@@ -1,84 +1,98 @@
-# Desafio de programação
 
-O intuito desse teste é avaliar os seus conhecimentos técnicos em programação.
+# hubla-import-transactions
 
----
+Import transactions Hubla
 
-# Instruções para entrega do desafio
+## Tech stack
 
-1. Faça o fork desse repositório para a sua conta no GitHub
-2. Implemente o projeto em seu clone local
-3. Envie o link do seu repositório para seu contato Tech Recruiter na Hubla
+### NodeJS with Typescript
 
----
+Backend is a NodeJS and Typescript application, running Express, Postgres database and auth via JWT - Transparent Token
 
-# Descrição do projeto
+Primary keys are uuid for using microservices
 
-Surgiu uma nova demanda urgente e precisamos de uma área exclusiva para fazer o upload de um arquivo das transações
-feitas na venda de produtos por nossos produtores.
+The entrypoint is the `src/server.ts` file.
 
-Nossa plataforma trabalha no modelo produtor-afiliado, sendo assim um produtor pode vender seus produtos e ter 1 ou N
-afiliados também vendendo esses produtos, desde que seja paga uma comissão por venda.
+### Swagger
+`/api-docs`
 
-Sua tarefa é construir uma interface web que possibilite o upload de um arquivo de transações de produtos vendidos,
-normalizar os dados e armazená-los em um banco de dados relacional.
+### Tests
 
-Você deve utilizar o arquivo [PRODUCTS.txt](PRODUCTS.txt) para fazer o teste manual da aplicação.
+Tests using **Jest**
 
-# Sua aplicação deve
+Test file path `src/__tests__` folder.
 
-1. Ter uma tela (via formulário) para fazer o upload do arquivo
-2. Fazer o parser do arquivo recebido, normalizar os dados e armazená-los em um banco de dados relacional, seguindo as
-   definições de interpretação do arquivo
-3. Exibir a lista das transações de produtos importadas por produtor/afiliado, com um totalizador do valor das
-   transações realizadas
-4. Ser simples de configurar e rodar, compatível com ambiente Unix (utilizar apenas bibliotecas gratuitas ou livres)
-5. Ter um README descrevendo o projeto e como fazer o setup
-6. Ter documentacao das APIs que o backend chama no frontend.
 
-Sobre tecnologias e práticas de programação:
+## How to run project with Docker
 
-1. Escolha a linguagem que quiser 
-2. Use qualquer banco de dados relacional
-3. Use commits pequenos no Git e escreva uma boa descrição para cada um
-4. Escreva unit tests
-5. Tente fazer o código mais legível e limpo possivel
-6. Escreva o código (nomes e comentários) em inglês. Se se sentir confortável escreva as documentações também em
-   inglês, mas pode ser em Português se preferir.
+Create file `.env` in folder and pass variables to db.
 
-# Sua aplicação não precisa
+Example:
+```
+TYPEORM_HOST=localhost
+TYPEORM_HOST_TEST=localhost
+TYPEORM_PORT=5432
+TYPEORM_PORT_TEST=5431
+TYPEORM_USERNAME=root
+TYPEORM_PASSWORD=123456
+TYPE_ORM_DATABASE=hubla_import_transactions
+TYPE_ORM_DATABASE_TEST=hubla_import_transactions_test
+TYPEORM_MIGRATIONS=/../../src/database/migrations/*.js
+TYPEORM_MODELS=/../../src/entities/*.js
+```
+After this
+```
+docker-compose up --build -d
+```
+The project will start on port `3001`
+Database in `5432`
+Database test in `5431`
+Adminer(Interface to query data) `8080`
 
-1. Lidar com autenticação ou autorização (mas você ganha pontos extras se fizer)
-2. Ser escrita usando algum framework específico (mas não tem problema usar)
-3. Documentação da API (mas você ganha pontos extras se fizer)
-4. Utilizar docker e docker-compose (mas você ganha pontos extras se fizer)
-5. Ter testes integrados/end-to-end (mas você ganha pontos extras se fizer)
+## How to run project without docker
+Create file `.env.dev` in folder and pass variables to db.
+Example:
+```
+TYPEORM_HOST=localhost
+TYPEORM_HOST_TEST=localhost
+TYPEORM_PORT=5432
+TYPEORM_PORT_TEST=5431
+TYPEORM_USERNAME=root
+TYPEORM_PASSWORD=123456
+TYPE_ORM_DATABASE=hubla_import_transactions
+TYPE_ORM_DATABASE_TEST=hubla_import_transactions_test
+TYPEORM_MIGRATIONS=/../../src/database/migrations/*.ts
+TYPEORM_MODELS=/../../src/entities/*.ts
+```
+Run app: `yarn run dev`
+Run migration: `yarn run typeorm migration:run -d src/database/index.ts`
+Run seed: `yarn run seed`
+Run tests: `yarn run test`
+Build app: `yarn run build`
+Run in prod: `yarn run start`
 
-# Documentação do arquivo de cadastro
+## Docs
 
-| Campo    | Início | Fim | Tamanho | Descrição                                       |
-|----------|--------|-----|---------|-------------------------------------------------|
-| Tipo     | 1      | 1   | 1       | Tipo da transação                               |
-| Data     | 2      | 26  | 25      | Data - ISO Date + GMT                           |
-| Produto  | 27     | 56  | 30      | Descrição do produto                            |
-| Valor    | 57     | 66  | 10      | Valor da transação (precisa ser divido por 100) |
-| Vendedor | 67     | 86  | 20      | Nome do vendedor                                |
+- `[GET] /healthz` - Check if application is online.
+- `[POST] /auth/login` - Endpoint to log in, passing email and password, the authentication token will be returned, which is valid for one hour.
+- `[GET] /auth/me` - Returns token and role of the logged in user
+- `[GET] /transactions` - Returns all balance by transactions
+- `[GET] /transactions/import` - Send file to import
+- `[GET] /api-docs`- Access Swagger
 
-# Documentação dos tipos de transação
-
-| Tipo | Descrição         | Natureza | Sinal |
-|------|-------------------|----------|-------|
-| 1    | Venda produtor    | Entrada  | +     |
-| 2    | Venda afiliado    | Entrada  | +     |
-| 3    | Comissão paga     | Saída    | -     |
-| 4    | Comissão recebida | Entrada  | +     |
-
-# Avaliação
-
-Seu projeto será avaliado de acordo com os seguintes critérios:
-
-1. Desenvolvimento dos [requisitos básicos](#Sua-aplicação-deve)
-2. Documentação correta do setup do ambiente e execução da aplicação
-3. Cobertura de testes
-
-# Boa sorte!!!
+## Gaps
+- Audit of uploaded files
+- User linkage that sent transaction with transaction itself
+- Decoupling file upload - store in public storage - S3
+- Using keycloak for authentication
+- Messaging usage for delivery guarantee and fallback
+- Deploying on a Kubernetes cluster
+- Resilience in the event of an event loss
+- Greater test coverage
+- Remove tests directly in the database, the ideal is not to have this lock in
+- Cloud logging system - Kibana, CloudWatch
+- Observability
+- Monitoring
+- Using DDD to model domains
+- Using Dependency Injection(DI) and Inversion(IOC)
+- Use of HATEOAS - API Maturity

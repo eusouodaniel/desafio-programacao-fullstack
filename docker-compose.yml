@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres
+    ports:
+      - ${TYPEORM_PORT}:${TYPEORM_PORT}
+    environment:
+      - POSTGRES_USER=${TYPEORM_USERNAME}
+      - POSTGRES_PASSWORD=${TYPEORM_PASSWORD}
+      - POSTGRES_DB=${TYPE_ORM_DATABASE}
+    volumes:
+      - 'db-data:/var/lib/postgresql/data'
+      - './sql/dump.sql:/docker-entrypoint-initdb.d/dump.sql'
+    networks:
+      - hubla-network
+
+  db-test:
+    image: postgres
+    ports:
+      - ${TYPEORM_PORT_TEST}:${TYPEORM_PORT}
+    environment:
+      - POSTGRES_USER=${TYPEORM_USERNAME}
+      - POSTGRES_PASSWORD=${TYPEORM_PASSWORD}
+      - POSTGRES_DB=${TYPE_ORM_DATABASE_TEST}
+    networks:
+      - hubla-network
+
+  app:
+    build: .
+    ports:
+      - 3001:3000
+    environment:
+      - TYPEORM_HOST=db
+      - TYPEORM_HOST_TEST=db-test
+    networks:
+      - hubla-network
+    depends_on:
+      - db
+      - db-test
+
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+    networks:
+      - hubla-network
+    depends_on:
+      - db
+      - db-test
+
+networks:
+  hubla-network:
+
+volumes:
+  db-data:
