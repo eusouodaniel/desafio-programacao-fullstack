@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "start": "cross-env NODE_ENV=prod ts-node dist/src/server.js",
+    "start": "NODE_ENV=prod ts-node dist/src/server.js",
     "dev": "cross-env NODE_ENV=dev ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts",
     "typeorm": "cross-env NODE_ENV=dev ts-node-dev ./node_modules/typeorm/cli.js",
     "seed": "cross-env NODE_ENV=dev ts-node-dev ./src/database/seeds",

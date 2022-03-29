@@ -11,6 +11,7 @@ services:
       - POSTGRES_DB=${TYPE_ORM_DATABASE}
     volumes:
       - 'db-data:/var/lib/postgresql/data'
+      - './sql/dump.sql:/docker-entrypoint-initdb.d/dump.sql'
     networks:
       - hubla-network
 
