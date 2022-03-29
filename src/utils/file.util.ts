@@ -11,6 +11,7 @@ class FileUtil {
     const fileTransaction = readFileSync(filePath, 'utf-8');
 
     return fileTransaction.split('\n')
+      .filter((transaction) => this.checkLineTransaction(transaction))
       .map((transaction) => this.parseTransaction(transaction));
   }
 
@@ -23,6 +24,14 @@ class FileUtil {
       price: Number(transaction.slice(56, 66)) / 100,
       affiliate: transaction.slice(66, 86).trim(),
     };
+  }
+
+  private checkLineTransaction(transaction) {
+    if (transaction.length == 0) {
+      return false;
+    }
+
+    return true;
   }
 
 }

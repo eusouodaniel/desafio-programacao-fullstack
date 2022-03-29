@@ -26,13 +26,13 @@ describe('Transaction', () => {
   });
 
   afterAll(async () => {
-    await AppDataSource.manager.query('DROP TABLE IF EXISTS transactions');
+    /*await AppDataSource.manager.query('DROP TABLE IF EXISTS transactions');
     await AppDataSource.manager.query('DROP TABLE IF EXISTS affiliates');
     await AppDataSource.manager.query('DROP TABLE IF EXISTS products');
     await AppDataSource.manager.query('DROP TABLE IF EXISTS transaction_types');
     await AppDataSource.manager.query('DROP TABLE IF EXISTS users');
     await AppDataSource.manager.query('DROP TABLE IF EXISTS migrations');
-    await AppDataSource.manager.query('DROP TABLE IF EXISTS typeorm_metadata');
+    await AppDataSource.manager.query('DROP TABLE IF EXISTS typeorm_metadata');*/
 
     await AppDataSource.destroy();
   });
@@ -62,7 +62,6 @@ describe('Transaction', () => {
       password: "producer-test",
     });
     expect(createSession.body).toHaveProperty('token');
-
     token = createSession.body.token;
   });
 
@@ -93,7 +92,6 @@ describe('Transaction', () => {
     const productsRepository = AppDataSource.getRepository(Product);
 
     const importTXT = path.resolve(__dirname, './mock/products.txt');
-
     await request(app).post('/transactions/import')
       .set('Authorization', 'Bearer '+token)
       .attach('file', importTXT);
