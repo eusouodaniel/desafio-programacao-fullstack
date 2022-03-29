@@ -6,6 +6,7 @@ import TransactionUtil from '../utils/transaction.util';
 import AppError from '../errors/AppError';
 
 const fileUtil = new FileUtil();
+const transactionUtil = new TransactionUtil();
 const transactionService = new TransactionService();
 
 class TransactionController {
