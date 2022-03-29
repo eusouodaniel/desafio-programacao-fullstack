@@ -3,6 +3,7 @@ import path from 'path';
 
 import app from '../../app';
 import { AppDataSource } from '../../database';
+import TransactionType from '../../entities/transaction-type.model';
 import User from '../../entities/user.model';
 
 describe('Transaction', () => {
@@ -48,6 +49,37 @@ describe('Transaction', () => {
       expect.objectContaining({
         email: 'producer-test',
         role: 'PRODUCER',
+      })
+    );
+  });
+
+  it('should be able to create create session', async () => {
+    const createSession = await request(app).post("/auth/login").send({
+      email: "producer-test",
+      password: "producer-test",
+    });
+    expect(createSession.body).toHaveProperty('token');
+
+    token = createSession.body.token;
+  });
+
+  it('should be able to create transaction types', async () => {
+    const transactionTypeRepository = AppDataSource.getRepository(TransactionType);
+
+    let transactionType = new TransactionType();
+    transactionType.type = 1;
+    transactionType.description = "Venda produtor";
+    transactionType.kind = "Entrada";
+    transactionType.operation = "+";
+
+    const saveTransactionType = await transactionTypeRepository.save(transactionType);
+
+    expect(saveTransactionType).toEqual(
+      expect.objectContaining({
+        type: 1,
+        description: 'Venda produtor',
+        kind: 'Entrada',
+        operation: '+'
       })
     );
   });
