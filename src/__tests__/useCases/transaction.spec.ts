@@ -129,4 +129,15 @@ describe('Transaction', () => {
     expect(transactions).toHaveLength(2);
   });
 
+  it('should be able to check balance transactions', async () => {
+    const response = await request(app)
+      .get('/transactions')
+      .set('Authorization', 'Bearer '+token)
+
+    expect(response.body.balance).toMatchObject({
+      income: 627.5,
+      outcome: 0,
+      total: 627.5,
+    });
+  });
 });
