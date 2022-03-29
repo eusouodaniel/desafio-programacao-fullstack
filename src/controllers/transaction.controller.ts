@@ -1,8 +1,10 @@
 import { Request, Response } from 'express';
 
-import TransactionService from '../services/TransactionService';
+import TransactionService from '../services/transaction.service';
+import TransactionUtil from '../utils/file.util';
 import AppError from '../errors/AppError';
 
+const fileUtil = new FileUtil();
 const transactionService = new TransactionService();
 
 class TransactionController {
