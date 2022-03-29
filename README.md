@@ -9,6 +9,8 @@ Backend is a NodeJS and Typescript application, running Express, Postgres databa
 
 Primary keys are uuid for using microservices
 
+The application has a call rate limit for possible overloads and attacks.
+
 The entrypoint is the `src/server.ts` file.
 
 ### Swagger

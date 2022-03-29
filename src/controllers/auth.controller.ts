@@ -15,7 +15,6 @@ class AuthController {
     }
 
     const userRepository = AppDataSource.getRepository(User);
-
     try {
       let user = await userRepository.findOneOrFail({ where: { email } });
       if (!user.checkIfUnencryptedPasswordIsValid(password)) {
