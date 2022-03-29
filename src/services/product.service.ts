@@ -9,6 +9,24 @@ class ProductService {
     return "";
   }
 
+  private filterProductsByName(transactions: IProductFields[], getProducts: Product[]) {
+    return transactions.map(transaction => transaction.product)
+      .filter(
+        productName =>
+        !getProducts
+          .map(product => product.name)
+          .includes(productName),
+      ).filter((value, index, self) => self.indexOf(value) === index);
+  }
+
+  private mapProductsByName(filterProductNames: String[]): any {
+    return filterProductNames.map(product => {
+      return {
+        name: product,
+      };
+    })
+  }
+
 }
 
 export default ProductService;
