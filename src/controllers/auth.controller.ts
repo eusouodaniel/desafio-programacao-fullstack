@@ -35,6 +35,26 @@ class AuthController {
     }
   };
 
+  async getInfoUser(req: Request, res: Response) {
+    let id = res.locals.jwtPayload.userId;
+    let email = res.locals.jwtPayload.email;
+
+    const userRepository = AppDataSource.getRepository(User);
+    try {
+      let user = await userRepository.findOneOrFail({ where: { id } });
+      if (!user) {
+        throw new AppError("User not found", 400);
+      }
+
+      return res.status(200).json({
+        email,
+        roles: user.role,
+      })
+    } catch (e) {
+      //log info
+      console.log(e);
+    }
+  };
 }
 
 export default AuthController;
