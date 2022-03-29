@@ -5,6 +5,9 @@ import app from '../../app';
 import { AppDataSource } from '../../database';
 import TransactionType from '../../entities/transaction-type.model';
 import User from '../../entities/user.model';
+import Transaction from '../../entities/transation.model';
+import Affiliate from '../../entities/affiliate.model';
+import Product from '../../entities/product.model';
 
 describe('Transaction', () => {
   let token = "";
@@ -83,4 +86,47 @@ describe('Transaction', () => {
       })
     );
   });
+
+  it('should be able to import transactions', async () => {
+    const transactionsRepository = AppDataSource.getRepository(Transaction);
+    const affiliatesRepository = AppDataSource.getRepository(Affiliate);
+    const productsRepository = AppDataSource.getRepository(Product);
+
+    const importTXT = path.resolve(__dirname, './mock/products.txt');
+
+    await request(app).post('/transactions/import')
+      .set('Authorization', 'Bearer '+token)
+      .attach('file', importTXT);
+
+    const transactions = await transactionsRepository.find();
+    const affiliates = await affiliatesRepository.find();
+    const products = await productsRepository.find();
+
+    expect(affiliates).toHaveLength(2);
+    expect(affiliates).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          name: 'JOSE CARLOS',
+        }),
+        expect.objectContaining({
+          name: 'MARIA CANDIDA',
+        })
+      ]),
+    );
+
+    expect(products).toHaveLength(2);
+    expect(products).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          name: 'CURSO DE BEM-ESTAR',
+        }),
+        expect.objectContaining({
+          name: 'DOMINANDO INVESTIMENTOS',
+        })
+      ]),
+    );
+
+    expect(transactions).toHaveLength(2);
+  });
+
 });
