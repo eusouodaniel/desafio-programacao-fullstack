@@ -93,3 +93,6 @@ Run in prod: `yarn run start`
 - Cloud logging system - Kibana, CloudWatch
 - Observability
 - Monitoring
+- Using DDD to model domains
+- Using Dependency Injection(DI) and Inversion(IOC)
+- Use of HATEOAS - API Maturity
