@@ -2,12 +2,16 @@ import { readFileSync } from 'fs';
 import path from 'path';
 
 import uploadConfig from '../config/upload';
+import IProductFields from '../interfaces/IProductFields';
 
 class FileUtil {
 
-  public processFile(filename: string) {
+  public processFile(filename: string): IProductFields[] {
     const filePath = path.join(uploadConfig.directory, filename);
     const fileTransaction = readFileSync(filePath, 'utf-8');
+
+    return fileTransaction.split('\n')
+      .map((transaction) => this.parseTransaction(transaction));
   }
 
   private parseTransaction(transaction: string) {
