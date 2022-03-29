@@ -26,7 +26,7 @@ class TransactionController {
   async import(req: Request, res: Response)  {
     try {
       if (req.file) {
-
+        const transactionFields = fileUtil.processFile(req.file.filename);
       }
       throw new AppError("File is required", 403);
     } catch (e) {
