@@ -98,6 +98,9 @@ Run in prod: `yarn run start`
 - Using Dependency Injection(DI) and Inversion(IOC)
 - Use of HATEOAS - API Maturity
 - Uncontrolled data used in path expression - Check the file before reading
+- Hardening Docker containers to enhance security
+- Scanning vulnerability in docker repo - Trivy and Synk
+- Add run tests in pipeline
 
 ## Security
 - Scanning with CodeQL
