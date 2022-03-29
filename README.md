@@ -5,9 +5,9 @@ Import transactions Hubla
 ## Tech stack
 
 ### NodeJS with Typescript
-Backend is a NodeJS and Typescript application, running Express, Postgres database and auth via JWT - Transparent Token
+Backend is a NodeJS and Typescript application, running Express, Postgres database and auth via JWT - Transparent Token.
 
-Primary keys are uuid for using microservices
+Primary keys are uuid for using microservices.
 
 The application has a call rate limit for possible overloads and attacks.
 
@@ -42,17 +42,18 @@ After this
 ```
 docker-compose up --build -d
 ```
-The project will start on port `3001`
-Database in `5432`
-Database test in `5431`
-Adminer(Interface to query data) `8080`
+- The project will start on port `3001`
+- Database in `5432`
+- Database test in `5431`
+- Adminer(Interface to query data) `8080`
 
 ### CI process
-`GitActions`
-Docker image: `https://hub.docker.com/repository/docker/danielrodriguess/hubla-import-transactions-api`
+- `GitActions`
+- Docker image: `https://hub.docker.com/repository/docker/danielrodriguess/hubla-import-transactions-api`
 
 ## How to run project without docker
 Create file `.env.dev` in folder and pass variables to db.
+
 Example:
 ```
 TYPEORM_HOST=localhost
@@ -66,12 +67,12 @@ TYPE_ORM_DATABASE_TEST=hubla_import_transactions_test
 TYPEORM_MIGRATIONS=/../../src/database/migrations/*.ts
 TYPEORM_MODELS=/../../src/entities/*.ts
 ```
-Run app: `yarn run dev`
-Run migration: `yarn run typeorm migration:run -d src/database/index.ts`
-Run seed: `yarn run seed`
-Run tests: `yarn run test`
-Build app: `yarn run build`
-Run in prod: `yarn run start`
+- Run app: `yarn run dev`
+- Run migration: `yarn run typeorm migration:run -d src/database/index.ts`
+- Run seed: `yarn run seed`
+- Run tests: `yarn run test`
+- Build app: `yarn run build`
+- Run in prod: `yarn run start`
 
 ## Docs
 - `[GET] /healthz` - Check if application is online.
@@ -91,9 +92,9 @@ Run in prod: `yarn run start`
 - Resilience in the event of an event loss
 - Greater test coverage
 - Remove tests directly in the database, the ideal is not to have this lock in
-- Cloud logging system - Kibana, CloudWatch
-- Observability
-- Monitoring
+- Cloud logging system - Kibana, CloudWatch, Sentry
+- Observability - Linkerd, Istio
+- Monitoring - Prometheus
 - Using DDD to model domains
 - Using Dependency Injection(DI) and Inversion(IOC)
 - Use of HATEOAS - API Maturity
@@ -101,6 +102,7 @@ Run in prod: `yarn run start`
 - Hardening Docker containers to enhance security
 - Scanning vulnerability in docker repo - Trivy and Synk
 - Add run tests in pipeline
+- Add option to refresh token
 
 ## Security
 - Scanning with CodeQL
