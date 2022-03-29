@@ -8,6 +8,9 @@ import 'express-async-errors';
 
 import routes from './routes';
 import AppError from './errors/AppError';
+import { AppDataSource } from './database';
+
+AppDataSource.initialize();
 
 const app = express();
 
