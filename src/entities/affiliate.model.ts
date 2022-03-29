@@ -7,6 +7,8 @@ import {
   OneToMany
 } from 'typeorm';
 
+import Transaction from './transation.model';
+
 @Entity('affiliates')
 export class Affiliate {
 
@@ -17,6 +19,9 @@ export class Affiliate {
     nullable: false,
   })
   name: string;
+
+  @OneToMany(() => Transaction, transaction => transaction.affiliate)
+  transaction: Transaction;
 
   @CreateDateColumn()
   created_at: Date;

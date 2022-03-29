@@ -7,6 +7,8 @@ import {
   OneToMany
 } from 'typeorm';
 
+import Transaction from './transation.model';
+
 @Entity('products')
 export class Product {
 
@@ -17,6 +19,9 @@ export class Product {
     nullable: false,
   })
   name: string;
+
+  @OneToMany(() => Transaction, transaction => transaction.product)
+  transaction: Transaction;
 
   @CreateDateColumn()
   created_at: Date;
