@@ -10,6 +10,6 @@ const transactionController = new TransactionController();
 const upload = multer(uploadConfig);
 
 transactionRouter.get('/', transactionController.index);
-transactionRouter.get('/import', upload.single('file'), transactionController.import);
+transactionRouter.post('/import', upload.single('file'), transactionController.import);
 
 export default transactionRouter;
