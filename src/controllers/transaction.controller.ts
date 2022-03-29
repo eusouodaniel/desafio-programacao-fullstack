@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 
 import TransactionService from '../services/transaction.service';
-import TransactionUtil from '../utils/file.util';
+import FileUtil from '../utils/file.util';
+import TransactionUtil from '../utils/transaction.util';
 import AppError from '../errors/AppError';
 
 const fileUtil = new FileUtil();
@@ -27,6 +28,9 @@ class TransactionController {
     try {
       if (req.file) {
         const transactionFields = fileUtil.processFile(req.file.filename);
+        const transactions = await transactionUtil.processImportTransaction(
+          transactionFields
+        );
       }
       throw new AppError("File is required", 403);
     } catch (e) {
