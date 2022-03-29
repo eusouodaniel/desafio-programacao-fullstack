@@ -1,5 +1,5 @@
 {
-  "name": "hubla-import-transactions",
+  "name": "hubla-import-transactions-api",
   "version": "1.0.0",
   "main": "index.js",
   "repository": "git@github.com:eusouodaniel/desafio-programacao-fullstack.git",

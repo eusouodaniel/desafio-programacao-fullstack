@@ -9,7 +9,7 @@ import swaggerFile from "../swagger.json";
 
 let limiter = RateLimit({
   windowMs: 1*60*1000, //1 minute
-  max: 10 //10 requests per minute
+  max: 50 //10 requests per minute
 });
 
 const routes = Router();

@@ -27,7 +27,10 @@ class AuthController {
         { expiresIn: "1h" }
       );
 
-      res.status(200).json({ "token": token });
+      res.status(200).json({
+        "token": token,
+        "roles": user.role,
+      });
     } catch (e) {
       //log info
       console.log(e);
@@ -47,7 +50,7 @@ class AuthController {
 
       return res.status(200).json({
         email,
-        roles: user.role,
+        "roles": user.role,
       })
     } catch (e) {
       //log info
