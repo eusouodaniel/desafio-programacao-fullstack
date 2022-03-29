@@ -6,7 +6,7 @@ import IProductFields from '../interfaces/IProductFields';
 
 class ProductService {
 
-  public async execute(transactions: IProductFields[]) {
+  public async execute(transactions: IProductFields[]): Promise<Affiliate[]> {
     const productRepository = AppDataSource.getRepository(Product);
     let getProducts = await productRepository.findBy({
       name: In(transactions.map(transaction => transaction.product)),
