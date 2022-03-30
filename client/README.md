@@ -18,8 +18,9 @@ docker run -p 3002:3000 -d hubla-import-transactions-client
 ```
 - The project will start on port `3002`
 
-## How to run project without docker
+## How to run project without docker - Recommended
 
+- Install libs: `yarn`
 - Run app: `yarn run dev`
 - Build app: `yarn run build`
 - Run in prod: `yarn run start`

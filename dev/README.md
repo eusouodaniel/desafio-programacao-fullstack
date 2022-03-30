@@ -67,6 +67,7 @@ TYPE_ORM_DATABASE_TEST=hubla_import_transactions_test
 TYPEORM_MIGRATIONS=/../../src/database/migrations/*.ts
 TYPEORM_MODELS=/../../src/entities/*.ts
 ```
+- Install libs: `yarn`
 - Run app: `yarn run dev`
 - Run migration: `yarn run typeorm migration:run -d src/database/index.ts`
 - Run seed: `yarn run seed`
