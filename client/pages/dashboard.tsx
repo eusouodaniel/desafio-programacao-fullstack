@@ -38,25 +38,30 @@ export default function Dashboard() {
     event.preventDefault();
     let formData = new FormData()
     formData.append('file', file.data)
-
-    const response = await api.post('/transactions/import', formData);
-    setFile({ preview: '', data: '' });
     
-    if (response.status == 201) {
-      swal({
-        title: "Deu certo",
-        text: "Transações importadas com sucesso!",
-        icon: 'success',
-      }).then(() => {
-        window.location.reload();
-      });
+    if (file.data) {
+        const response = await api.post('/transactions/import', formData);
+        setFile({ preview: '', data: '' });
+        
+        if (response.status == 201) {
+            swal({
+                title: "Deu certo",
+                text: "Transações importadas com sucesso!",
+                icon: 'success',
+            }).then(() => {
+                window.location.reload();
+            });
+        } else {
+            swal({
+                title: "Falhou :(",
+                text: "Ocorreu um problema!",
+                type: "warning"
+            });
+        }
     } else {
-      swal({
-        title: "Falhou :(",
-        text: "Ocorreu um problema!",
-        type: "warning"
-      });
+        alert("É necessário selecionar um arquivo.");
     }
+
   }
 
   useEffect(() => {

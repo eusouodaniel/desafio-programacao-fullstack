@@ -55,6 +55,7 @@ class AuthController {
     } catch (e) {
       //log info
       console.log(e);
+      throw new AppError("Email or password invalid", 400);
     }
   };
 }
