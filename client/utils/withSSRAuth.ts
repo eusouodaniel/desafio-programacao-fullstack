@@ -28,7 +28,7 @@ export function withSSRAuth<P>(fn: GetServerSideProps<P>, options?: WithSSRAuthO
 
       const userHasValidPermissions = validateUserPermissions({
         user,
-        roles 
+        roles
       })
 
       if (!userHasValidPermissions) {
@@ -46,7 +46,6 @@ export function withSSRAuth<P>(fn: GetServerSideProps<P>, options?: WithSSRAuthO
     } catch (err) {
       if (err instanceof AuthTokenError) {
         destroyCookie(ctx, 'nextauth.token')
-    
         return {
           redirect: {
             destination: '/',
