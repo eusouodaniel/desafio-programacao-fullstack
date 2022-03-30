@@ -1,6 +1,6 @@
-# hubla-import-transactions
+# hubla-import-transactions-api
 
-Import transactions Hubla
+Import transactions Hubla api
 
 ## Tech stack
 

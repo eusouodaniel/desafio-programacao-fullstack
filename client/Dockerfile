@@ -8,8 +8,6 @@ RUN yarn
 
 COPY . .
 
-RUN yarn run build
+EXPOSE 3002
 
-EXPOSE 3001
-
-ENTRYPOINT [ "npm", "run", "start" ]
+ENTRYPOINT [ "npm", "run", "dev" ]

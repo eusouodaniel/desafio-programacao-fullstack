@@ -5,7 +5,7 @@ import styles from '../styles/Home.module.css';
 import { withSSRGuest } from '../utils/withSSRGuest';
 
 export default function Home() {
-  
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -33,6 +33,8 @@ export default function Home() {
 
 export const getServerSideProps = withSSRGuest(async (ctx) => {
   return {
-    props: {}
+    props: {
+
+    }
   }
 });

@@ -12,7 +12,7 @@ export default function Dashboard() {
   const { user, signOut, balance } = useContext(AuthContext)
   const [file, setFile] = useState({ preview: '', data: '' });
 
-  const ref = useRef();
+  const ref = useRef(null);
 
   const reset = () => {
     ref.current.value = "";
@@ -38,11 +38,11 @@ export default function Dashboard() {
     event.preventDefault();
     let formData = new FormData()
     formData.append('file', file.data)
-    
+
     if (file.data) {
         const response = await api.post('/transactions/import', formData);
         setFile({ preview: '', data: '' });
-        
+
         if (response.status == 201) {
             swal({
                 title: "Deu certo",
@@ -73,7 +73,7 @@ export default function Dashboard() {
       <h1>Welcome {user?.email}</h1>
 
       <button onClick={showBalance}>Checar meu saldo</button>
-      | 
+      |
       <button onClick={signOut}>Sair</button>
 
       <Can roles={['PRODUCER']}>
@@ -92,7 +92,7 @@ export const getServerSideProps = withSSRAuth(async (ctx) => {
 
   return {
     props: {
-      
+
     }
   }
 })

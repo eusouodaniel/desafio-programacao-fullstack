@@ -17,7 +17,7 @@ class AuthController {
     const userRepository = AppDataSource.getRepository(User);
     try {
       let user = await userRepository.findOneOrFail({ where: { email } });
-      if (!user.checkIfUnencryptedPasswordIsValid(password)) {
+      if (user && !user.checkIfUnencryptedPasswordIsValid(password)) {
         throw new AppError("Invalid token", 401);
       }
 
@@ -34,6 +34,7 @@ class AuthController {
     } catch (e) {
       //log info
       console.log(e);
+      throw new AppError("Invalid token", 401);
     }
   };
 
