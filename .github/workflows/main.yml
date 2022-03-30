@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'dev/**'
+      - '.github/**'
     branches:
       - main
 
@@ -21,7 +22,7 @@ jobs:
           echo "::set-output name=sha::$SHA"
 
       - name: Build docker image
-        run: docker build -t -f dev danielrodriguess/hubla-import-transactions-api:${{ steps.generate_sha.outputs.sha }} 
+        run: docker build -t --file dev danielrodriguess/hubla-import-transactions-api:${{ steps.generate_sha.outputs.sha }} 
 
       - name: Login to Docker Hub
         uses: docker/login-action@v1
