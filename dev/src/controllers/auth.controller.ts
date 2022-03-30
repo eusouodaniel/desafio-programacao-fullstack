@@ -15,10 +15,9 @@ class AuthController {
     }
 
     const userRepository = AppDataSource.getRepository(User);
-
     try {
       let user = await userRepository.findOneOrFail({ where: { email } });
-      if (!user.checkIfUnencryptedPasswordIsValid(password)) {
+      if (user && !user.checkIfUnencryptedPasswordIsValid(password)) {
         throw new AppError("Invalid token", 401);
       }
 
@@ -28,10 +27,14 @@ class AuthController {
         { expiresIn: "1h" }
       );
 
-      res.status(200).json({ "token": token });
+      res.status(200).json({
+        "token": token,
+        "roles": user.role,
+      });
     } catch (e) {
       //log info
       console.log(e);
+      throw new AppError("Invalid token", 401);
     }
   };
 
@@ -48,11 +51,12 @@ class AuthController {
 
       return res.status(200).json({
         email,
-        roles: user.role,
+        "roles": user.role,
       })
     } catch (e) {
       //log info
       console.log(e);
+      throw new AppError("Email or password invalid", 400);
     }
   };
 }

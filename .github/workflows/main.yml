@@ -2,6 +2,8 @@ name: CI hubla-import-transactions-api
 
 on:
   push:
+    paths:
+      - 'dev/**'
     branches:
       - main
 
