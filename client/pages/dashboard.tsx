@@ -26,6 +26,14 @@ export default function Dashboard() {
     });
   }
 
+  const clientModal = (title, text, icon) => {
+    return swal({
+      title: title,
+      text: text,
+      icon: icon
+    });
+  }
+
   const handleFileChange = (e) => {
     const file = {
       preview: URL.createObjectURL(e.target.files[0]),
@@ -44,19 +52,19 @@ export default function Dashboard() {
         setFile({ preview: '', data: '' });
 
         if (response.status == 201) {
-            swal({
-                title: "Deu certo",
-                text: "Transações importadas com sucesso!",
-                icon: 'success',
-            }).then(() => {
+            clientModal(
+              "Deu certo",
+              "Transações importadas com sucesso!",
+              'success'
+            ).then(() => {
                 window.location.reload();
             });
         } else {
-            swal({
-                title: "Falhou :(",
-                text: "Ocorreu um problema!",
-                type: "warning"
-            });
+          clientModal(
+            "Falhou :(",
+            "Ocorreu um problema!",
+            'warning'
+          )
         }
     } else {
         alert("É necessário selecionar um arquivo.");
@@ -86,13 +94,11 @@ export default function Dashboard() {
   )
 }
 
-export const getServerSideProps = withSSRAuth(async (ctx) => {
+export const dadada = withSSRAuth(async (ctx) => {
   const apiClient = setupAPIClient(ctx);
-  const response = await apiClient.get('/auth/me');
+  const { data } = await apiClient.get('/auth/me');
 
   return {
-    props: {
-
-    }
+    props: { data }
   }
 })

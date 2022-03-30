@@ -1,4 +1,4 @@
-FROM node:14-alpine3.14
+FROM node:16-alpine3.14
 
 WORKDIR /home/node/app
 
@@ -8,6 +8,8 @@ RUN yarn
 
 COPY . .
 
+RUN yarn run build
+
 EXPOSE 3002
 
-ENTRYPOINT [ "npm", "run", "dev" ]
+ENTRYPOINT [ "npm", "run", "start" ]

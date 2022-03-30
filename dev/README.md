@@ -79,7 +79,7 @@ TYPEORM_MODELS=/../../src/entities/*.ts
 - `[GET] /healthz` - Check if application is online.
 - `[POST] /auth/login` - Endpoint to log in, passing email and password, the authentication token will be returned, which is valid for one hour.
 - `[GET] /auth/me` - Returns token and role of the logged in user
-- `[GET] /transactions` - Returns all balance by transactions
+- `[POST] /transactions` - Returns all balance by transactions
 - `[GET] /transactions/import` - Send file to import
 - `[GET] /api-docs`- Access Swagger
 
