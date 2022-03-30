@@ -37,3 +37,4 @@ docker run -p 3002:3000 -d hubla-import-transactions-client
 - Cloud logging system - Sentry
 - Add run tests in pipeline
 - Add option to refresh token
+- I18N
